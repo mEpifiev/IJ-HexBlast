@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Hexpand.Core
+namespace Game.General
 {
     public class HexBlockPresenter
     {

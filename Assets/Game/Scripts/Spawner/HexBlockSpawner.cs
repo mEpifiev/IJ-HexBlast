@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hexpand.Core
+namespace Game.Spawner
 {
     [RequireComponent(typeof(HexBlockPresenterFactory))]
     public class HexBlockSpawner : MonoBehaviour

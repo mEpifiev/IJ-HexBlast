@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hexpand.Core
+namespace Game.General
 {
     [CreateAssetMenu(fileName = "HexBlockData", menuName = "Settings/HexBlockData")]
     public class HexBlockData : ScriptableObject

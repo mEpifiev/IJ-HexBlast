@@ -1,6 +1,7 @@
+using Game.General;
 using UnityEngine;
 
-namespace Hexpand.Core
+namespace Game.Spawner
 {
     public class HexBlockPresenterFactory : MonoBehaviour
     {
