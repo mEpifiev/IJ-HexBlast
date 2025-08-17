@@ -1,0 +1,42 @@
+using System;
+using UnityEngine;
+
+namespace Hexpand.Core
+{
+    public class HexBlockPresenter
+    {
+        private readonly HexBlock _model;
+        private readonly HexBlockView _view;
+
+        public HexBlockPresenter(HexBlock model, HexBlockView view)
+        {
+            _model = model ?? throw new NullReferenceException(nameof(model));
+            _view = view ?? throw new NullReferenceException(nameof(_view));
+
+            UpdateView();
+        }
+
+        private void UpdateView()
+        {
+            Sprite sprite = GetSpriteForValue(_model.HexBlockData.MinValue, _model.HexBlockData.MaxValue, _model.Value);
+            _view.Render(sprite, _model.Color, _model.Value);
+        }
+
+        private Sprite GetSpriteForValue(int minValue, int maxValue, int value)
+        {
+            const int BlockCategories = 3;
+
+            int rangeSize = (maxValue - minValue + 1) / BlockCategories;
+            int firstBorder = minValue + rangeSize;
+            int secondBorder = minValue + rangeSize * (BlockCategories - 1);
+
+            if (value < firstBorder)
+                return _view.SmallBlockSprite;
+            else if (value < secondBorder)
+                return _view.MediumBlockSprite;
+            else
+                return _view.BigBlockSprite;
+        }
+    }
+
+}
