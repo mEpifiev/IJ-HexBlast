@@ -1,7 +1,7 @@
-using Game.General;
+using Game.Scripts.General;
 using UnityEngine;
 
-namespace Game.Spawner
+namespace Game.Scripts.Spawner
 {
     public class HexBlockPresenterFactory : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace Game.Spawner
             Color color = _hexBlockData.Colors[Random.Range(0, _hexBlockData.Colors.Length)];
             int value = Random.Range(_hexBlockData.MinValue, _hexBlockData.MaxValue + 1);
 
-            HexBlock model = new(_hexBlockData, color, value);
+            HexBlockModel model = new(_hexBlockData, color, value);
 
             HexBlockView view = Instantiate(_prefab, position, Quaternion.identity, _holder);
 

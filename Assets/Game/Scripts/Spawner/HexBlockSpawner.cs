@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+using Game.Scripts.General;
 using UnityEngine;
 
-namespace Game.Spawner
+namespace Game.Scripts.Spawner
 {
     [RequireComponent(typeof(HexBlockPresenterFactory))]
     public class HexBlockSpawner : MonoBehaviour
@@ -12,14 +14,16 @@ namespace Game.Spawner
         private void Awake()
         {
             _hexBlockPresenterFactory = GetComponent<HexBlockPresenterFactory>();
-
-            Spawn();
         }
 
-        public void Spawn()
+        public List<HexBlockPresenter> Spawn()
         {
+            List<HexBlockPresenter> hexBlockPresenters = new();
+
             for (int i = 0; i < _spawnPoins.Length; i++)
-                _hexBlockPresenterFactory.Create(_spawnPoins[i].position);
+                hexBlockPresenters.Add(_hexBlockPresenterFactory.Create(_spawnPoins[i].position));
+
+            return hexBlockPresenters;
         }
     }
 }
