@@ -2,7 +2,7 @@ using TMPro;
 using System;
 using UnityEngine;
 
-namespace Game.General
+namespace Game.Scripts.General
 {
     public class HexBlockView : MonoBehaviour
     {

@@ -1,14 +1,14 @@
 using UnityEngine;
 
-namespace Game.General
+namespace Game.Scripts.General
 {
-    public class HexBlock
+    public class HexBlockModel
     {
         private readonly HexBlockData _hexBlockData;
         private readonly Color _color;
         private readonly int _value;
 
-        public HexBlock(HexBlockData hexBlockData, Color color, int value)
+        public HexBlockModel(HexBlockData hexBlockData, Color color, int value)
         {
             _hexBlockData = hexBlockData;
             _color = color;

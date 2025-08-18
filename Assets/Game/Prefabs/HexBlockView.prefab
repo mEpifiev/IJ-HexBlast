@@ -72,8 +72,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: fa3db792fad20a243844210b6cd0ba3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 3.28, y: 3.83}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2644869518560804411
@@ -161,7 +161,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2780028316815839710
 MonoBehaviour:
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 55
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f45792fdaa690e84fab7fdd449188720, type: 2}
   m_sharedMaterial: {fileID: 532879593603020012, guid: f45792fdaa690e84fab7fdd449188720, type: 2}
@@ -210,12 +210,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4.97
+  m_fontSize: 4.85
   m_fontSizeBase: 4.97
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 0.8
+  m_fontSizeMax: 18
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.4302635, y: 2.116281, z: 5.472948, w: 2.3244603}
+  m_margin: {x: 5.4302635, y: 2.0804887, z: 5.472948, w: 2.3642297}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -265,6 +265,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7778442102991889617}
   - component: {fileID: 78898555060128734}
+  - component: {fileID: 8553159846179766815}
+  - component: {fileID: 3569149163499443334}
   m_Layer: 0
   m_Name: HexBlockView
   m_TagString: Untagged
@@ -306,3 +308,68 @@ MonoBehaviour:
   _smallBlock: {fileID: 21300000, guid: e8b75d121a928f949b5577dff0ceae03, type: 3}
   _mediumBlock: {fileID: 21300000, guid: 473c2ec9c00064642a13a59d5cd63020, type: 3}
   _bigBlock: {fileID: 21300000, guid: fa3db792fad20a243844210b6cd0ba3a, type: 3}
+--- !u!114 &8553159846179766815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348645552325677582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc24eb0da0ebc9142a16ded9d6bb81a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &3569149163499443334
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348645552325677582}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.28, y: 3.83}
+    newSize: {x: 3.28, y: 3.83}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.27008793, y: 0.56644076}
+      - {x: -0.49347967, y: 0.16011024}
+      - {x: -0.4977886, y: -0.10530493}
+      - {x: -0.25572053, y: -0.49749875}
+      - {x: 0.20706601, y: -0.49916714}
+      - {x: 0.45245087, y: -0.09019148}
+      - {x: 0.4561988, y: 0.15543051}
+      - {x: 0.22914836, y: 0.56604797}
+  m_UseDelaunayMesh: 0

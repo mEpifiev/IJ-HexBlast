@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.General
+namespace Game.Scripts.General
 {
     public class HexTile : MonoBehaviour
     {

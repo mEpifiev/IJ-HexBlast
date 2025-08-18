@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.General
+namespace Game.Scripts.General
 {
     public class HexGrid : MonoBehaviour
     {
@@ -45,5 +45,4 @@ namespace Game.General
             }
         }
     }
-
 }

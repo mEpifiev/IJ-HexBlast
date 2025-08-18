@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-namespace Game.General
+namespace Game.Scripts.General
 {
     public class HexBlockPresenter
     {
-        private readonly HexBlock _model;
+        private readonly HexBlockModel _model;
         private readonly HexBlockView _view;
 
-        public HexBlockPresenter(HexBlock model, HexBlockView view)
+        public HexBlockPresenter(HexBlockModel model, HexBlockView view)
         {
             _model = model ?? throw new NullReferenceException(nameof(model));
             _view = view ?? throw new NullReferenceException(nameof(_view));
