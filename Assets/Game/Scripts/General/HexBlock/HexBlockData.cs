@@ -6,17 +6,17 @@ namespace Game.Scripts.General
     public class HexBlockData : ScriptableObject
     {
         [SerializeField] private Color[] _colors;
-        [SerializeField] private int minValue;
-        [SerializeField] private int maxValue;
+        [SerializeField] private int _minNumberOfFillingUnits;
+        [SerializeField] private int _maxNumberOfFillingUnits;
 
         public Color[] Colors => _colors;
-        public int MinValue => minValue;
-        public int MaxValue => maxValue;
+        public int MinNumberOfFillingUnits => _minNumberOfFillingUnits;
+        public int MaxNumberOfFillingUnits => _maxNumberOfFillingUnits;
 
         private void OnValidate()
         {
-            if (minValue > maxValue)
-                minValue = maxValue - 1;
+            if (_minNumberOfFillingUnits > _maxNumberOfFillingUnits)
+                _minNumberOfFillingUnits = _maxNumberOfFillingUnits - 1;
         }
     }
 }

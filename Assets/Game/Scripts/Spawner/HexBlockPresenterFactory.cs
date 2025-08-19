@@ -12,9 +12,9 @@ namespace Game.Scripts.Spawner
         public HexBlockPresenter Create(Vector3 position)
         {
             Color color = _hexBlockData.Colors[Random.Range(0, _hexBlockData.Colors.Length)];
-            int value = Random.Range(_hexBlockData.MinValue, _hexBlockData.MaxValue + 1);
+            int numberOfFillingUnits = Random.Range(_hexBlockData.MinNumberOfFillingUnits, _hexBlockData.MaxNumberOfFillingUnits + 1);
 
-            HexBlockModel model = new(_hexBlockData, color, value);
+            HexBlockModel model = new(_hexBlockData, color, numberOfFillingUnits);
 
             HexBlockView view = Instantiate(_prefab, position, Quaternion.identity, _holder);
 

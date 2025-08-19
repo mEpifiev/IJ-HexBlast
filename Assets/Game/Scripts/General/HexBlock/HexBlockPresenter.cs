@@ -18,8 +18,8 @@ namespace Game.Scripts.General
 
         private void UpdateView()
         {
-            Sprite sprite = GetSpriteForValue(_model.HexBlockData.MinValue, _model.HexBlockData.MaxValue, _model.Value);
-            _view.Render(sprite, _model.Color, _model.Value);
+            Sprite sprite = GetSpriteForValue(_model.HexBlockData.MinNumberOfFillingUnits, _model.HexBlockData.MaxNumberOfFillingUnits, _model.NumberOfFillingUnits);
+            _view.Render(sprite, _model.Color, _model.NumberOfFillingUnits);
         }
 
         private Sprite GetSpriteForValue(int minValue, int maxValue, int value)

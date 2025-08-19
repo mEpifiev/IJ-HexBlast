@@ -6,17 +6,17 @@ namespace Game.Scripts.General
     {
         private readonly HexBlockData _hexBlockData;
         private readonly Color _color;
-        private readonly int _value;
+        private readonly int _numberOfFillingUnits;
 
-        public HexBlockModel(HexBlockData hexBlockData, Color color, int value)
+        public HexBlockModel(HexBlockData hexBlockData, Color color, int numberOfFillingUnits)
         {
             _hexBlockData = hexBlockData;
             _color = color;
-            _value = value;
+            _numberOfFillingUnits = numberOfFillingUnits;
         }
 
         public HexBlockData HexBlockData => _hexBlockData;
         public Color Color => _color;
-        public int Value => _value;
+        public int NumberOfFillingUnits => _numberOfFillingUnits;
     }
 }
