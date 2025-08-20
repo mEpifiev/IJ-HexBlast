@@ -1,6 +1,5 @@
 using Game.Scripts.Controls;
 using Game.Scripts.General;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Game.Scripts.Interact
@@ -9,7 +8,7 @@ namespace Game.Scripts.Interact
     {
         [SerializeField] private InputReader _inputReader;
         
-        [CanBeNull] private HexBlockView _currentHexBlock;
+        private HexBlockView _currentHexBlock;
         private Vector3 _startPosition;
 
         private void OnEnable()
@@ -35,6 +34,7 @@ namespace Game.Scripts.Interact
 
             if (hit.collider != null && hit.collider.TryGetComponent(out HexBlockView hexBlockView))
             {
+                hexBlockView.BringToFront();
                 _currentHexBlock = hexBlockView;
                 _startPosition = hexBlockView.transform.position;
             }
@@ -53,6 +53,7 @@ namespace Game.Scripts.Interact
             if (_currentHexBlock == null)
                 return;
 
+            _currentHexBlock.ResetSortingOrder();
             _currentHexBlock.transform.position = _startPosition;
             _currentHexBlock = null;
         }
