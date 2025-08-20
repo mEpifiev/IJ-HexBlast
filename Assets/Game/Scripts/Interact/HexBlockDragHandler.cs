@@ -1,35 +1,60 @@
+using Game.Scripts.Controls;
+using Game.Scripts.General;
+using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Game.Scripts.Interact
 {
-    [RequireComponent(typeof(Collider2D))]
-    public class HexBlockDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class HexBlockDragHandler : MonoBehaviour
     {
+        [SerializeField] private InputReader _inputReader;
+        
+        [CanBeNull] private HexBlockView _currentHexBlock;
         private Vector3 _startPosition;
 
-        private Camera _camera;
-
-        private void Awake()
+        private void OnEnable()
         {
-            _camera = Camera.main;
+            _inputReader.DragStarted += OnDragStarted;
+            _inputReader.Dragging += OnDragging;
+            _inputReader.DragEnded += OnDragEnded;
+        }
+        
+        private void OnDisable()
+        {
+            _inputReader.DragStarted -= OnDragStarted;
+            _inputReader.Dragging -= OnDragging;
+            _inputReader.DragEnded -= OnDragEnded;
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
+        private void OnDragStarted(Vector3 mousePosition)
         {
-            _startPosition = transform.position;
-        }
+            if (_currentHexBlock != null)
+                return;
 
-        public void OnDrag(PointerEventData eventData)
-        {
-            Vector3 worldPosition = _camera.ScreenToWorldPoint(eventData.position);
-            worldPosition.z = 0f; 
-            transform.position = worldPosition;
-        }
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-        public void OnEndDrag(PointerEventData eventData)
+            if (hit.collider != null && hit.collider.TryGetComponent(out HexBlockView hexBlockView))
+            {
+                _currentHexBlock = hexBlockView;
+                _startPosition = hexBlockView.transform.position;
+            }
+        }
+        
+        private void OnDragging(Vector3 mousePosition)
         {
-            transform.position = _startPosition;
+            if (_currentHexBlock == null)
+                return;
+
+            _currentHexBlock.transform.position = mousePosition;
+        }
+        
+        private void OnDragEnded(Vector3 mousePosition)
+        {
+            if (_currentHexBlock == null)
+                return;
+
+            _currentHexBlock.transform.position = _startPosition;
+            _currentHexBlock = null;
         }
     }
 }
