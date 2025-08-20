@@ -15,10 +15,12 @@ namespace Game.Scripts.General
         [SerializeField] private Sprite _smallBlock;
         [SerializeField] private Sprite _mediumBlock;
         [SerializeField] private Sprite _bigBlock;
-
+        
         public Sprite SmallBlockSprite => _smallBlock;
         public Sprite MediumBlockSprite => _mediumBlock;
         public Sprite BigBlockSprite => _bigBlock;
+        
+        public Color Color => _spriteRenderer.color;
 
         public void Render(Sprite sprite, Color color, int numberOfFillingUnits)
         {
@@ -30,7 +32,7 @@ namespace Game.Scripts.General
             
             _spriteRenderer.sprite = sprite;
             _spriteRenderer.color = color;
-            
+
             _numberOfFillingUnitsText.text = numberOfFillingUnits.ToString();
         }
 

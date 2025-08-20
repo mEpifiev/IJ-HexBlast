@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 73392882}
   - component: {fileID: 73392881}
   - component: {fileID: 73392880}
+  - component: {fileID: 73392883}
   m_Layer: 0
   m_Name: HexBlockSpawner
   m_TagString: Untagged
@@ -190,6 +191,19 @@ Transform:
   - {fileID: 1654974634}
   m_Father: {fileID: 1684107699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &73392883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73392879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a89c5d26627e4f08806430d5cbfffc01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 2829218941066848427, guid: 483d9bc4005769a498764ff924aa19cd, type: 3}
 --- !u!1 &262659617
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,6 +732,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 1728305944}
+  _hexGrid: {fileID: 1498247222}
+  _colorHexBlockFactory: {fileID: 73392883}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

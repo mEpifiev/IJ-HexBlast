@@ -1,7 +1,7 @@
 using Game.Scripts.General;
 using UnityEngine;
 
-namespace Game.Scripts.Spawner
+namespace Game.Scripts.Factories
 {
     public class HexBlockPresenterFactory : MonoBehaviour
     {

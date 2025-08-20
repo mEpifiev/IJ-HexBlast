@@ -93,8 +93,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7432787175027269950}
-  - component: {fileID: 4939604939102379073}
   - component: {fileID: 4772194201086185370}
+  - component: {fileID: 4939604939102379073}
   m_Layer: 0
   m_Name: HexTile
   m_TagString: Untagged
@@ -118,6 +118,21 @@ Transform:
   - {fileID: 251582486034662426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4772194201086185370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3296275465151564553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfdc665281948ea46af738491a751adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 6502078012530318017}
+  _defaultColor: {r: 0, g: 0.16470589, b: 0.32941177, a: 1}
+  _previewColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 0.74509805}
 --- !u!60 &4939604939102379073
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -169,15 +184,3 @@ PolygonCollider2D:
       - {x: 0.16438244, y: 0.00062909117}
       - {x: 0.082089916, y: 0.1448074}
   m_UseDelaunayMesh: 0
---- !u!114 &4772194201086185370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296275465151564553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfdc665281948ea46af738491a751adb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -15,6 +15,25 @@ namespace Game.Scripts.General
         {
             GenerateGrid();
         }
+        
+        public HexTile GetClosestTile(Vector3 position)
+        {
+            HexTile closestTile = null;
+            float minDistance = float.MaxValue;
+
+            foreach (HexTile tile in _grid)
+            {
+                float distance = Vector2.Distance(tile.transform.position, position);
+                
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestTile = tile;
+                }
+            }
+
+            return closestTile;
+        }
 
         private void GenerateGrid()
         {
@@ -41,6 +60,7 @@ namespace Game.Scripts.General
 
                     HexTile hexTile = Instantiate(_hexTilePrefab, position, Quaternion.identity, transform);
                     _grid[x, y] = hexTile;
+                    hexTile.Initialize(x, y);
                 }
             }
         }
