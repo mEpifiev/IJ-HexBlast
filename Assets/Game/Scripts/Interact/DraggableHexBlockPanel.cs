@@ -13,13 +13,23 @@ namespace Game.Scripts.Interact
 
         private void Start()
         {
-            _hexBlockViews.AddRange(_draggableHexBlockSpawner.Spawn());
+            TryAddNewHexBlocks();
         }
 
         public void RemoveBlock(HexBlockView block)
         {
             Destroy(block.gameObject);
             _hexBlockViews.Remove(block);
+
+            TryAddNewHexBlocks();
+        }
+
+        private void TryAddNewHexBlocks()
+        {
+            if (_hexBlockViews.Count != 0)
+                return;
+
+            _hexBlockViews.AddRange(_draggableHexBlockSpawner.Spawn());
         }
     }
 }
