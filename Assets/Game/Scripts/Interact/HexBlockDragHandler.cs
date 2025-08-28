@@ -10,9 +10,10 @@ namespace Game.Scripts.Interact
     {
         [SerializeField] private InputReader _inputReader;
         [SerializeField] private HexGrid _hexGrid;
+        [SerializeField] private DraggableHexBlockPanel _draggableHexBlockPanel;
         [SerializeField] private ColorHexBlockFactory _colorHexBlockFactory;
         
-        private HexBlockView _currentHexBlock;
+        private HexBlockView _currentDraggableHexBlockView;
         private Vector3 _startPosition;
         private HexTile _currentHexTile;
 
@@ -32,30 +33,30 @@ namespace Game.Scripts.Interact
 
         private void OnDragStarted(Vector3 mousePosition)
         {
-            if (_currentHexBlock != null)
+            if (_currentDraggableHexBlockView != null)
                 return;
 
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.TryGetComponent(out HexBlockView hexBlockView))
+            if (hit.collider != null && hit.collider.TryGetComponent(out HexBlockView draggableHexBlockView))
             {
-                hexBlockView.BringToFront();
-                _currentHexBlock = hexBlockView;
-                _startPosition = hexBlockView.transform.position;
+                draggableHexBlockView.BringToFront();
+                _currentDraggableHexBlockView = draggableHexBlockView;
+                _startPosition = draggableHexBlockView.transform.position;
             }
         }
         
         private void OnDragging(Vector3 mousePosition)
         {
-            if (_currentHexBlock == null)
+            if (_currentDraggableHexBlockView == null)
                 return;
 
             HexTile closestTile = _hexGrid.GetClosestTile(mousePosition);
-            
+
             if (_currentHexTile != null && _currentHexTile != closestTile)
                 _currentHexTile.RemovePreview();
             
-            _currentHexBlock.transform.position = mousePosition;
+            _currentDraggableHexBlockView.transform.position = mousePosition;
             
             if (closestTile != null)
             {
@@ -66,23 +67,23 @@ namespace Game.Scripts.Interact
         
         private void OnDragEnded(Vector3 mousePosition)
         {
-            if (_currentHexBlock == null)
+            if (_currentDraggableHexBlockView == null)
                 return;
 
             if (_currentHexTile != null)
             {
                 if (_currentHexTile.IsOccupied == false)
                 {
-                    ColorHexBlock colorHexBlock = _colorHexBlockFactory.Create(_currentHexTile.transform.position, _currentHexBlock.Color); 
+                    ColorHexBlock colorHexBlock = _colorHexBlockFactory.Create(_currentHexTile.transform.position, _currentDraggableHexBlockView.Color); 
                     _currentHexTile.PlaceHex(colorHexBlock);
                 
-                    Destroy(_currentHexBlock.gameObject);
+                    _draggableHexBlockPanel.RemoveBlock(_currentDraggableHexBlockView);
                 }
                 else
                 {
-                    _currentHexBlock.ResetSortingOrder();
-                    _currentHexBlock.transform.position = _startPosition;
-                    _currentHexBlock = null;
+                    _currentDraggableHexBlockView.ResetSortingOrder();
+                    _currentDraggableHexBlockView.transform.position = _startPosition;
+                    _currentDraggableHexBlockView = null;
                 }
                 
                 _currentHexTile.RemovePreview();

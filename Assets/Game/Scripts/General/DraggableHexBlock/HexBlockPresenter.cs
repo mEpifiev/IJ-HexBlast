@@ -8,8 +8,6 @@ namespace Game.Scripts.General
         private readonly HexBlockModel _model;
         private readonly HexBlockView _view;
 
-        public Color Color => _model.Color;
-
         public HexBlockPresenter(HexBlockModel model, HexBlockView view)
         {
             _model = model ?? throw new NullReferenceException(nameof(model));
