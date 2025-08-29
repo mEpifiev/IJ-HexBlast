@@ -7,6 +7,9 @@ namespace Game.Scripts.Animations
     {
         public void PlayAppearAnimation(Transform transform)
         {
+            if (transform == null)
+                return;
+            
             transform.localScale = Vector3.zero;
 
             transform.DOScale(Vector3.one, AnimationConfig.AppearDuration)
