@@ -17,14 +17,14 @@ namespace Game.Scripts.Spawner
             _draggableHexBlockFactory = GetComponent<DraggableHexBlockFactory>();
         }
 
-        public List<HexBlockView> Spawn()
+        public List<HexBlockPresenter> Spawn()
         {
-            List<HexBlockView> hexBlockViews = new();
+            List<HexBlockPresenter> hexBlockPresenters = new();
 
             foreach (Transform spawnPoint in _spawnPoins)
-                hexBlockViews.Add(_draggableHexBlockFactory.Create(spawnPoint.position));
+                hexBlockPresenters.Add(_draggableHexBlockFactory.Create(spawnPoint.position));
 
-            return hexBlockViews;
+            return hexBlockPresenters;
         }
     }
 }

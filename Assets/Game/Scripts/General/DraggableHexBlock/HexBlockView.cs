@@ -1,5 +1,6 @@
 using TMPro;
 using System;
+using Game.Scripts.Animations;
 using UnityEngine;
 
 namespace Game.Scripts.General
@@ -15,6 +16,10 @@ namespace Game.Scripts.General
         [SerializeField] private Sprite _smallBlock;
         [SerializeField] private Sprite _mediumBlock;
         [SerializeField] private Sprite _bigBlock;
+        [SerializeField] private ParticleSystem _appearVFX;
+
+        private HexBlockPresenter _hexBlockPresenter;
+        private TweenAnimator _tweenAnimator;
         
         public Sprite SmallBlockSprite => _smallBlock;
         public Sprite MediumBlockSprite => _mediumBlock;
@@ -22,10 +27,15 @@ namespace Game.Scripts.General
         
         public Color Color => _spriteRenderer.color;
 
-        public void Render(Sprite sprite, Color color, int numberOfFillingUnits)
+        public HexBlockPresenter HexBlockPresenter => _hexBlockPresenter;
+
+        public void Initialize(HexBlockPresenter hexBlockPresenter, Sprite sprite, Color color, int numberOfFillingUnits)
         {
-            if (sprite == null || _spriteRenderer == null || _numberOfFillingUnitsText == null || _textMeshRenderer == null)
+            if (hexBlockPresenter == null || sprite == null || _spriteRenderer == null || _numberOfFillingUnitsText == null || _textMeshRenderer == null)
                 throw new NullReferenceException();
+
+            _hexBlockPresenter = hexBlockPresenter;
+            _tweenAnimator = new();
 
             _spriteRenderer.sortingOrder = DefaultSortOrder;
             _textMeshRenderer.sortingOrder = DefaultSortOrder;
@@ -34,6 +44,14 @@ namespace Game.Scripts.General
             _spriteRenderer.color = color;
 
             _numberOfFillingUnitsText.text = numberOfFillingUnits.ToString();
+        }
+
+        public void Visualize()
+        {
+            _tweenAnimator.PlayAppearAnimation(transform);
+            
+            ParticleSystem effect = Instantiate(_appearVFX, transform.position, Quaternion.identity);
+            Destroy(effect.gameObject, effect.main.duration + effect.main.startLifetime.constantMax);
         }
 
         public void BringToFront()

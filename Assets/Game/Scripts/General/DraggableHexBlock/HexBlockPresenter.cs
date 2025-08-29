@@ -15,11 +15,16 @@ namespace Game.Scripts.General
 
             UpdateView();
         }
+
+        public void Visualize()
+        {
+            _view.Visualize();
+        }
         
         private void UpdateView()
         {
             Sprite sprite = GetSpriteForValue(_model.HexBlockData.MinNumberOfFillingUnits, _model.HexBlockData.MaxNumberOfFillingUnits, _model.NumberOfFillingUnits);
-            _view.Render(sprite, _model.Color, _model.NumberOfFillingUnits);
+            _view.Initialize(this, sprite, _model.Color, _model.NumberOfFillingUnits);
         }
 
         private Sprite GetSpriteForValue(int minValue, int maxValue, int value)

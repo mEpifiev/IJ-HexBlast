@@ -9,16 +9,15 @@ namespace Game.Scripts.Factories
         [SerializeField] private HexBlockView _prefab;
         [SerializeField] private Transform _holder;
 
-        public HexBlockView Create(Vector3 position)
+        public HexBlockPresenter Create(Vector3 position)
         {
             Color color = _hexBlockData.Colors[Random.Range(0, _hexBlockData.Colors.Length)];
             int numberOfFillingUnits = Random.Range(_hexBlockData.MinNumberOfFillingUnits, _hexBlockData.MaxNumberOfFillingUnits + 1);
 
             HexBlockModel model = new(_hexBlockData, color, numberOfFillingUnits);
             HexBlockView view = Instantiate(_prefab, position, Quaternion.identity, _holder);
-            new HexBlockPresenter(model, view);
-
-            return view;
+            
+            return new HexBlockPresenter(model, view);
         }
     }
 }

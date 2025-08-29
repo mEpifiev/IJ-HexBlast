@@ -541,8 +541,8 @@ Transform:
   - {fileID: 1809361219}
   - {fileID: 1498247223}
   - {fileID: 1728305945}
-  - {fileID: 73392882}
   - {fileID: 1947475361}
+  - {fileID: 73392882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1728305943
@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 1947475362}
   - component: {fileID: 1947475363}
   m_Layer: 0
-  m_Name: DragHexBlockPanel
+  m_Name: DraggableDragHexBlockPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7134757fdc1edfc4682deb39c7b7e117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hexBlockSpawner: {fileID: 73392880}
+  _draggableHexBlockSpawner: {fileID: 73392880}
 --- !u!114 &1947475363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,6 +733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 1728305944}
   _hexGrid: {fileID: 1498247222}
+  _draggableHexBlockPanel: {fileID: 1947475362}
   _colorHexBlockFactory: {fileID: 73392883}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -308,6 +308,7 @@ MonoBehaviour:
   _smallBlock: {fileID: 21300000, guid: e8b75d121a928f949b5577dff0ceae03, type: 3}
   _mediumBlock: {fileID: 21300000, guid: 473c2ec9c00064642a13a59d5cd63020, type: 3}
   _bigBlock: {fileID: 21300000, guid: fa3db792fad20a243844210b6cd0ba3a, type: 3}
+  _appearVFX: {fileID: 19859158, guid: 753c345bcc944eb438870bab71fbfd94, type: 3}
 --- !u!60 &3569149163499443334
 PolygonCollider2D:
   m_ObjectHideFlags: 0

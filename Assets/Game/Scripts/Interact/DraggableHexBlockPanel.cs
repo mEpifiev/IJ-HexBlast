@@ -9,27 +9,32 @@ namespace Game.Scripts.Interact
     {
         [SerializeField] private DraggableHexBlockSpawner _draggableHexBlockSpawner;
 
-        private readonly List<HexBlockView> _hexBlockViews = new();
+        private readonly List<HexBlockPresenter> _hexBlockPresenters = new();
 
         private void Start()
         {
             TryAddNewHexBlocks();
         }
 
-        public void RemoveBlock(HexBlockView block)
+        public void RemoveBlock(HexBlockView hexBlockView)
         {
-            Destroy(block.gameObject);
-            _hexBlockViews.Remove(block);
+            Destroy(hexBlockView.gameObject);
+
+            _hexBlockPresenters.Remove(hexBlockView.HexBlockPresenter);
 
             TryAddNewHexBlocks();
         }
 
         private void TryAddNewHexBlocks()
         {
-            if (_hexBlockViews.Count != 0)
+            if (_hexBlockPresenters.Count != 0)
                 return;
 
-            _hexBlockViews.AddRange(_draggableHexBlockSpawner.Spawn());
+            List<HexBlockPresenter> newBlocks = _draggableHexBlockSpawner.Spawn();
+            _hexBlockPresenters.AddRange(newBlocks);
+
+            for (int i = 0; i < newBlocks.Count; i++)
+                newBlocks[i].Visualize();
         }
     }
 }
