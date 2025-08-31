@@ -13,11 +13,12 @@ namespace Game.Scripts.General
         private IPlaceable _placeableHexBlock;
         private bool _isOccupied = false;
 
+        public Vector2Int Coords => _coords;
         public bool IsOccupied => _isOccupied;
 
-        public void Initialize(int x, int y)
+        public void Initialize(int q, int r)
         {
-            _coords = new Vector2Int(x, y);
+            _coords = new Vector2Int(q, r);
         }
 
         public void PlaceHex(IPlaceable placeable)
@@ -25,15 +26,22 @@ namespace Game.Scripts.General
             _isOccupied = true;
             _placeableHexBlock = placeable;
             placeable.PlaceOn(this);
+            RemovePreview();
         }
 
         public void ShowPreview()
         {
+            if (_isOccupied)
+                return;
+            
             _spriteRenderer.color = _previewColor;
         }
         
         public void RemovePreview()
         {
+            if (_isOccupied)
+                return;
+            
             _spriteRenderer.color = _defaultColor;
         }
     }

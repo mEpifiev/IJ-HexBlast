@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Scripts.Controls;
 using Game.Scripts.Factories;
 using Game.Scripts.General;
@@ -12,10 +13,14 @@ namespace Game.Scripts.Interact
         [SerializeField] private HexGrid _hexGrid;
         [SerializeField] private DraggableHexBlockPanel _draggableHexBlockPanel;
         [SerializeField] private ColorHexBlockFactory _colorHexBlockFactory;
+
+        private Vector3 _dragOffset;
+        private Vector3 _startPosition;
         
         private HexBlockView _currentDraggableHexBlockView;
-        private Vector3 _startPosition;
         private HexTile _currentHexTile;
+        
+        private List<HexTile> _previewTiles = new();
 
         private void OnEnable()
         {
@@ -23,7 +28,7 @@ namespace Game.Scripts.Interact
             _inputReader.Dragging += OnDragging;
             _inputReader.DragEnded += OnDragEnded;
         }
-        
+
         private void OnDisable()
         {
             _inputReader.DragStarted -= OnDragStarted;
@@ -38,57 +43,78 @@ namespace Game.Scripts.Interact
 
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.TryGetComponent(out HexBlockView draggableHexBlockView))
+            if (hit.collider != null && hit.collider.TryGetComponent(out HexBlockView hexBlockView))
             {
-                draggableHexBlockView.BringToFront();
-                _currentDraggableHexBlockView = draggableHexBlockView;
-                _startPosition = draggableHexBlockView.transform.position;
+                hexBlockView.BringToFront();
+                _currentDraggableHexBlockView = hexBlockView;
+                _startPosition = hexBlockView.transform.position;
+                
+                _dragOffset = _currentDraggableHexBlockView.transform.position - mousePosition;
             }
         }
-        
+
         private void OnDragging(Vector3 mousePosition)
         {
             if (_currentDraggableHexBlockView == null)
                 return;
 
+            _currentDraggableHexBlockView.transform.position = mousePosition + _dragOffset;
+            
             HexTile closestTile = _hexGrid.GetClosestTile(mousePosition);
 
-            if (_currentHexTile != null && _currentHexTile != closestTile)
-                _currentHexTile.RemovePreview();
-            
-            _currentDraggableHexBlockView.transform.position = mousePosition;
-            
-            if (closestTile != null)
+            if (closestTile == null)
             {
-                closestTile.ShowPreview();
-                _currentHexTile = closestTile;
+                foreach (HexTile tile in _previewTiles)
+                    tile.RemovePreview();
+
+                _previewTiles.Clear();
+
+                return;
             }
+
+            foreach (HexTile tile in _previewTiles)
+                tile.RemovePreview();
+
+            _previewTiles.Clear();
+
+            _previewTiles = _hexGrid.GetTilesForPlacement(closestTile,
+                _currentDraggableHexBlockView.HexBlockPresenter.NumberOfFillingUnits);
+
+            foreach (HexTile tile in _previewTiles)
+                tile.ShowPreview();
         }
-        
+
         private void OnDragEnded(Vector3 mousePosition)
         {
             if (_currentDraggableHexBlockView == null)
                 return;
 
-            if (_currentHexTile != null)
+            if (_previewTiles.Count > 0)
             {
-                if (_currentHexTile.IsOccupied == false)
+                foreach (var tile in _previewTiles)
                 {
-                    ColorHexBlock colorHexBlock = _colorHexBlockFactory.Create(_currentHexTile.transform.position, _currentDraggableHexBlockView.Color); 
-                    _currentHexTile.PlaceHex(colorHexBlock);
-                
-                    _draggableHexBlockPanel.RemoveBlock(_currentDraggableHexBlockView);
+                    if (tile.IsOccupied == false)
+                    {
+                        ColorHexBlock colorHexBlock = _colorHexBlockFactory.Create(tile.transform.position,
+                            _currentDraggableHexBlockView.Color);
+                        tile.PlaceHex(colorHexBlock);
+                    }
                 }
-                else
-                {
-                    _currentDraggableHexBlockView.ResetSortingOrder();
-                    _currentDraggableHexBlockView.transform.position = _startPosition;
-                    _currentDraggableHexBlockView = null;
-                }
-                
-                _currentHexTile.RemovePreview();
-                _currentHexTile = null;
+
+                _draggableHexBlockPanel.RemoveBlock(_currentDraggableHexBlockView);
             }
+            else
+            {
+                _currentDraggableHexBlockView.ResetSortingOrder();
+                _currentDraggableHexBlockView.transform.position = _startPosition;
+            }
+            
+            foreach (HexTile tile in _previewTiles)
+                tile.RemovePreview();
+            
+            _previewTiles.Clear();
+            
+            _currentDraggableHexBlockView = null;
         }
     }
 }

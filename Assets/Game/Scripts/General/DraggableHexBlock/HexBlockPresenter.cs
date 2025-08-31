@@ -8,6 +8,8 @@ namespace Game.Scripts.General
         private readonly HexBlockModel _model;
         private readonly HexBlockView _view;
 
+        public int NumberOfFillingUnits => _model.NumberOfFillingUnits;
+
         public HexBlockPresenter(HexBlockModel model, HexBlockView view)
         {
             _model = model ?? throw new NullReferenceException(nameof(model));
@@ -20,7 +22,7 @@ namespace Game.Scripts.General
         {
             _view.Visualize();
         }
-        
+
         private void UpdateView()
         {
             Sprite sprite = GetSpriteForValue(_model.HexBlockData.MinNumberOfFillingUnits, _model.HexBlockData.MaxNumberOfFillingUnits, _model.NumberOfFillingUnits);
