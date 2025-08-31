@@ -462,7 +462,7 @@ MonoBehaviour:
   _hexTilePrefab: {fileID: 4772194201086185370, guid: d58f3c24fa4f84c42a384129bd51b12e, type: 3}
   _width: 19
   _height: 20
-  _hexSpacing: 0.162
+  _hexSpacing: 0.16
 --- !u!4 &1498247223
 Transform:
   m_ObjectHideFlags: 0
