@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Scripts.General
@@ -50,7 +51,38 @@ namespace Game.Scripts.General
             return closestTile;
         }
 
-        public List<HexTile> GetNeighbors(HexTile tile)
+        public List<HexTile> GetTilesForPlacement(HexTile center, int count)
+        {
+            List<HexTile> result = new List<HexTile>();
+            Queue<HexTile> queue = new Queue<HexTile>();
+            HashSet<HexTile> visited = new HashSet<HexTile>();
+
+            queue.Enqueue(center);
+            visited.Add(center);
+
+            while (queue.Count > 0 && result.Count < count)
+            {
+                HexTile current = queue.Dequeue();
+
+                if (current.IsOccupied == false)
+                    result.Add(current);
+                
+                List<HexTile> neighbors = GetNeighbors(current)
+                    .Where(neighbor => neighbor.IsOccupied == false && visited.Contains(neighbor) == false)
+                    .OrderBy(neighbor => Vector2Int.Distance(neighbor.Coords, center.Coords))
+                    .ToList();
+
+                foreach (HexTile neighbor in neighbors)
+                {
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+            
+            return result;
+        }
+        
+        private List<HexTile> GetNeighbors(HexTile tile)
         {
             List<HexTile> neighbors = new();
             
@@ -63,35 +95,6 @@ namespace Game.Scripts.General
             }
             
             return neighbors;
-        }
-
-        public List<HexTile> GetTilesForPlacement(HexTile center, int count)
-        {
-            List<HexTile> result = new();
-            Queue<HexTile> queue = new();
-            HashSet<HexTile> visited = new();
-
-            queue.Enqueue(center);
-            visited.Add(center);
-
-            while (queue.Count > 0 && result.Count < count)
-            {
-                HexTile current = queue.Dequeue();
-
-                if (current.IsOccupied == false)
-                    result.Add(current);
-
-                foreach (HexTile neighbor in GetNeighbors(current))
-                {
-                    if (visited.Contains(neighbor) == false)
-                    {
-                        visited.Add(neighbor);
-                        queue.Enqueue(neighbor);
-                    }
-                }
-            }
-
-            return result;
         }
 
         private bool IsInsideGrid(Vector2Int coords)
