@@ -1,26 +1,37 @@
+using System;
 using System.Collections.Generic;
 using Game.Scripts.Controls;
 using Game.Scripts.Factories;
 using Game.Scripts.General;
 using Game.Scripts.General.Placeables;
+using Game.Scripts.Interfaces;
 using UnityEngine;
+using VContainer;
 
 namespace Game.Scripts.Interact
 {
     public class HexBlockDragHandler : MonoBehaviour
     {
-        [SerializeField] private InputReader _inputReader;
-        [SerializeField] private HexGrid _hexGrid;
         [SerializeField] private DraggableHexBlockPanel _draggableHexBlockPanel;
         [SerializeField] private ColorHexBlockFactory _colorHexBlockFactory;
-
+        
+        private IInputReader _inputReader;
+        private HexPlacementFinder _hexPlacementFinder;
+        
         private Vector3 _dragOffset;
         private Vector3 _startPosition;
         
         private HexBlockView _currentDraggableHexBlockView;
         private HexTile _currentHexTile;
-        
+
         private List<HexTile> _previewTiles = new();
+
+        [Inject]
+        public void Initialize(IInputReader inputReader, HexPlacementFinder hexPlacementFinder)
+        {
+            _inputReader = inputReader ?? throw new NullReferenceException(nameof(inputReader));
+            _hexPlacementFinder = hexPlacementFinder ?? throw new NullReferenceException(nameof(hexPlacementFinder));
+        }
 
         private void OnEnable()
         {
@@ -60,25 +71,19 @@ namespace Game.Scripts.Interact
 
             _currentDraggableHexBlockView.transform.position = mousePosition + _dragOffset;
             
-            HexTile closestTile = _hexGrid.GetClosestTile(mousePosition);
+            HexTile closestTile = _hexPlacementFinder.GetClosestTile(mousePosition);
 
             if (closestTile == null)
             {
-                foreach (HexTile tile in _previewTiles)
-                    tile.RemovePreview();
-
-                _previewTiles.Clear();
+                ClearPreview();
 
                 return;
             }
 
-            foreach (HexTile tile in _previewTiles)
-                tile.RemovePreview();
-
-            _previewTiles.Clear();
-
-            _previewTiles = _hexGrid.GetTilesForPlacement(closestTile,
-                _currentDraggableHexBlockView.HexBlockPresenter.NumberOfFillingUnits);
+            ClearPreview();
+            
+            _currentHexTile = closestTile;
+            _previewTiles = _hexPlacementFinder.GetTilesForPlacement(closestTile, _currentDraggableHexBlockView.HexBlockPresenter.NumberOfFillingUnits);
 
             foreach (HexTile tile in _previewTiles)
                 tile.ShowPreview();
@@ -89,14 +94,14 @@ namespace Game.Scripts.Interact
             if (_currentDraggableHexBlockView == null)
                 return;
 
-            if (_previewTiles.Count > 0)
+            if (_previewTiles.Count > 0 && _currentHexTile != null)
             {
-                foreach (var tile in _previewTiles)
+                foreach (HexTile tile in _previewTiles)
                 {
                     if (tile.IsOccupied == false)
                     {
-                        ColorHexBlock colorHexBlock = _colorHexBlockFactory.Create(tile.transform.position,
-                            _currentDraggableHexBlockView.Color);
+                        ColorHexBlock colorHexBlock = _colorHexBlockFactory.Create(tile.transform.position, _currentDraggableHexBlockView.Color);
+
                         tile.PlaceHex(colorHexBlock);
                     }
                 }
@@ -108,13 +113,19 @@ namespace Game.Scripts.Interact
                 _currentDraggableHexBlockView.ResetSortingOrder();
                 _currentDraggableHexBlockView.transform.position = _startPosition;
             }
-            
+
+            ClearPreview();
+                
+            _currentHexTile = null;
+            _currentDraggableHexBlockView = null;
+        }
+
+        private void ClearPreview()
+        {
             foreach (HexTile tile in _previewTiles)
                 tile.RemovePreview();
             
             _previewTiles.Clear();
-            
-            _currentDraggableHexBlockView = null;
         }
     }
 }

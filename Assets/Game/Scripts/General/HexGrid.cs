@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
+using Game.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Game.Scripts.General
 {
-    public class HexGrid : MonoBehaviour
+    public class HexGrid : MonoBehaviour, IHexGrid
     {
         [SerializeField] private HexTile _hexTilePrefab;
         [SerializeField] private int _width = 19;
@@ -12,95 +11,14 @@ namespace Game.Scripts.General
         [SerializeField] private float _hexSpacing = 0.175f;
 
         private HexTile[,] _grid;
+
+        public HexTile[,] Grid => _grid;
+
+        private void Awake() 
+            => GenerateGrid();
         
-        private readonly Vector2Int[] _neighborDirections =
-        {
-            new Vector2Int(1, 0),   
-            new Vector2Int(1, -1),
-            new Vector2Int(0, -1),  
-            new Vector2Int(-1, 0),
-            new Vector2Int(-1, 1), 
-            new Vector2Int(0, 1) 
-        };
-
-        private void Awake()
-        {
-            GenerateGrid();
-        }
-        
-        public HexTile GetClosestTile(Vector3 position)
-        {
-            HexTile closestTile = null;
-            float closestDistance = float.MaxValue;
-            float snapRadius = 0.5f;
-
-            foreach (HexTile tile in _grid)
-            {
-                float distance = Vector2.Distance(tile.transform.position, position);
-
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestTile = tile;
-                }
-            }
-
-            if (closestDistance > snapRadius)
-                return null;
-
-            return closestTile;
-        }
-
-        public List<HexTile> GetTilesForPlacement(HexTile center, int count)
-        {
-            List<HexTile> result = new List<HexTile>();
-            Queue<HexTile> queue = new Queue<HexTile>();
-            HashSet<HexTile> visited = new HashSet<HexTile>();
-
-            queue.Enqueue(center);
-            visited.Add(center);
-
-            while (queue.Count > 0 && result.Count < count)
-            {
-                HexTile current = queue.Dequeue();
-
-                if (current.IsOccupied == false)
-                    result.Add(current);
-                
-                List<HexTile> neighbors = GetNeighbors(current)
-                    .Where(neighbor => neighbor.IsOccupied == false && visited.Contains(neighbor) == false)
-                    .OrderBy(neighbor => Vector2Int.Distance(neighbor.Coords, center.Coords))
-                    .ToList();
-
-                foreach (HexTile neighbor in neighbors)
-                {
-                    visited.Add(neighbor);
-                    queue.Enqueue(neighbor);
-                }
-            }
-            
-            return result;
-        }
-        
-        private List<HexTile> GetNeighbors(HexTile tile)
-        {
-            List<HexTile> neighbors = new();
-            
-            foreach (Vector2Int direction in _neighborDirections)
-            {
-                Vector2Int coords = tile.Coords + direction;
-                
-                if (IsInsideGrid(coords))
-                    neighbors.Add(_grid[coords.x, coords.y]);
-            }
-            
-            return neighbors;
-        }
-
-        private bool IsInsideGrid(Vector2Int coords)
-        {
-            return coords.x >= 0 && coords.x < _width && coords.y >= 0 && coords.y < _height;
-        }
+        public bool IsInsideGrid(Vector2Int coords)
+            => coords.x >= 0 && coords.x < _width && coords.y >= 0 && coords.y < _height;
 
         private void GenerateGrid()
         {

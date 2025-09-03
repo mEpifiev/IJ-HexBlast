@@ -1,9 +1,10 @@
 using System;
+using Game.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Game.Scripts.Controls
 {
-    public class InputReader : MonoBehaviour
+    public class InputReader : MonoBehaviour, IInputReader
     {
         private const int MouseButton = 0;
         

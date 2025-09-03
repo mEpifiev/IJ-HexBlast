@@ -1,6 +1,6 @@
-using UnityEngine;
+using Game.Scripts.General;
 
-namespace Game.Scripts.General.Placeables
+namespace Game.Scripts.Interfaces
 {
     public interface IPlaceable
     {

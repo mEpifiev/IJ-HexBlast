@@ -1,4 +1,5 @@
 using Game.Scripts.General.Placeables;
+using Game.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Game.Scripts.General
@@ -21,7 +22,7 @@ namespace Game.Scripts.General
             _coords = new Vector2Int(q, r);
         }
 
-        public void PlaceHex(IPlaceable placeable)
+        public void PlaceHex(ColorHexBlock placeable)
         {
             _isOccupied = true;
             _placeableHexBlock = placeable;

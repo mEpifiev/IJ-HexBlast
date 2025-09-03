@@ -1,3 +1,4 @@
+using Game.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Game.Scripts.General.Placeables
